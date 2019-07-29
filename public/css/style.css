@@ -1,0 +1,11 @@
+.lists{float: left;}
+li{
+	list-style: none;
+	float: left;padding-right: 20px;
+}
+.container{width: 1300px;margin: 0px auto;}
+table tr td{
+	
+    border: 1px solid;
+}
+table{ width: 100%;}

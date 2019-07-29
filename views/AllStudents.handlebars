@@ -1,0 +1,104 @@
+<table cell-spacing="0" cell-padding= "10px" class="table table-bordered" id="mytable">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Usernames</th>
+			<th>Password</th>
+			<th>Email</th>
+			<th>Update</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each result}}
+		<tr data-id="{{id}}">
+			<td>{{id}}</td>
+			<td >{{username}}</td>
+			<td >{{password}}</td>
+			<td  >{{email}}</td>
+			<td  data-id="{{id}}">Update</td>
+			<td >
+				<a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{ id }}" data-username="{{ username }}" data-email="{{ email }}">Edit</a>
+			 	<a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ id }}">Delete</a>
+			</td>
+			
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+<!-- Update Product Modal -->
+<form action="/routing/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <input type="text" name="username" class="form-control product_name" placeholder="Product Name" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="email" class="form-control price" placeholder="Price" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="product_id">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+
+
+<!-- Delete Product Modal-->
+ 	  <form id="add-row-form" action="/routing/delete" method="post">
+ 	     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	        <div class="modal-dialog">
+ 	           <div class="modal-content">
+ 	               <div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">Delete Product</h5>
+ 	                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 	               </div>
+ 	               <div class="modal-body">
+					 <strong>Are You Sure To Delete This Data?</strong>
+ 	               </div>
+ 	               <div class="modal-footer">
+						<input type="hidden" name="id" class="form-control product_id2" required>
+ 	                   	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 	                  	<button type="submit" class="btn btn-success">Delete</button>
+ 	               </div>
+ 	      			</div>
+ 	        </div>
+ 	     </div>
+ 	 </form>
+
+<script src="/js/jquery-3.3.1.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+			//showing data to modal for edit record
+      $('#mytable').on('click','.edit',function(){
+        var id = $(this).data('id');
+        var username = $(this).data('username');
+        var email = $(this).data('email');
+        $('#EditModal').modal('show');
+        $('.product_name').val(username);
+        $('.price').val(email);
+        $('.product_id').val(id);
+      });
+			//showing modal for delete record
+			$('#mytable').on('click','.delete',function(){
+        var id = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.product_id2').val(id);
+      });
+
+    });
+</script>
